@@ -7,7 +7,7 @@ var NODE_QUEUE_SIZE = 9;
 
 var STARTING_DIRECTION = Math.PI / 4;
 
-var cnv, ctx, width, height, centerX, centerY, points, stopped;
+var cnv, ctx, width, height, centerX, centerY, points, stopped, paused;
 
 var clock; // Absolute time since last update.
 var accumulatedDelta = 0; // How much delta time is built up.
@@ -55,9 +55,27 @@ function setRight(val) {
     }
 }
 
+function togglePause() {
+    if (stopped) return; // Don't pause if game is over
+    paused = !paused;
+    var pauseOverlay = document.getElementById('pause_overlay');
+    if (paused) {
+        pauseOverlay.style.display = 'block';
+    } else {
+        pauseOverlay.style.display = 'none';
+        // Reset clock to avoid time jump when resuming
+        clock = Date.now();
+        accumulatedDelta = 0;
+    }
+}
+
 window.addEventListener('keydown', function(e) {
     if (e.key == "ArrowLeft") setLeft(true);
     if (e.key == "ArrowRight") setRight(true);
+    if (e.key == " " || e.key == "p" || e.key == "P") {
+        e.preventDefault();
+        togglePause();
+    }
 });
 
 window.addEventListener('keyup', function(e) {
@@ -173,6 +191,7 @@ function init() {
     clock = Date.now();
     leftDown = false;
     rightDown = false;
+    paused = false;
     regeneratePellet();
 
     // The +1 is necessary since the queue excludes the current position.
@@ -191,6 +210,10 @@ function init() {
 
 function update() {
     if (stopped) return;
+    if (paused) {
+        window.requestAnimationFrame(update);
+        return;
+    }
     var curr = Date.now();
     var delta = curr - clock;
     clock = curr;
