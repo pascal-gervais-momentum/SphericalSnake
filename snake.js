@@ -136,6 +136,17 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
     window.location.reload(true);
 })
 
+// Restart game when level changes
+document.getElementById("starting_level").addEventListener("change", function() {
+    // Reset game state
+    stopped = false;
+    document.getElementsByTagName('body')[0].style = '';
+    document.getElementById('gg').style = 'display:none';
+
+    // Restart the game with new level
+    init();
+})
+
 function regeneratePellet() {
     pellet = pointFromSpherical(Math.random() * Math.PI * 2, Math.random() * Math.PI);
 }

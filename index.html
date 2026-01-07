@@ -156,11 +156,15 @@
 
         #starting_level {
             font-size: 1em;
-            padding: 5px;
+            padding: 5px 10px;
             border-radius: 5px;
             border: 2px solid #333;
             background: #FFF;
             cursor: pointer;
+            width: 60px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
         }
 
     </style>
@@ -171,18 +175,7 @@
     <div id="container">
         <div id="level_selector">
             <label for="starting_level">Starting Level:</label>
-            <select id="starting_level">
-                <option value="1" selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
+            <input type="number" id="starting_level" min="1" max="50" value="1">
         </div>
         <p id="score">Score: 0</p>
         <p id='gg'>Good game! <a id="refresh" href="#">Play again?</a></p>
