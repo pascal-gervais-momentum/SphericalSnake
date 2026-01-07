@@ -133,16 +133,22 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
     window.location.reload(true);
 })
 
-// Restart game when level changes
-document.getElementById("starting_level").addEventListener("change", function() {
+// Function to restart game
+function restartGame() {
     // Reset game state
     stopped = false;
     document.getElementsByTagName('body')[0].style = '';
     document.getElementById('gg').style = 'display:none';
 
-    // Restart the game with new level
+    // Restart the game with new settings
     init();
-})
+}
+
+// Restart game when level changes
+document.getElementById("starting_level").addEventListener("change", restartGame);
+
+// Restart game when speed changes
+document.getElementById("game_speed").addEventListener("change", restartGame);
 
 function regeneratePellet() {
     pellet = pointFromSpherical(Math.random() * Math.PI * 2, Math.random() * Math.PI);
@@ -221,6 +227,10 @@ function init() {
     // Get selected starting level
     var selectedLevel = parseInt(document.getElementById('starting_level').value);
     var levelParams = getLevelParameters(selectedLevel);
+
+    // Get selected speed (1-10 scale, where 5 is default, higher = faster)
+    var selectedSpeed = parseInt(document.getElementById('game_speed').value);
+    NODE_QUEUE_SIZE = Math.max(4, 14 - selectedSpeed);
 
     // The +1 is necessary since the queue excludes the current position.
     snakeVelocity = NODE_ANGLE * 2 / (NODE_QUEUE_SIZE + 1);
