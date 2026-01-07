@@ -61,6 +61,21 @@
             position: absolute;
             top: 200px;
         }
+        #pause_overlay {
+            width: 360px;
+            display: none;
+            position: absolute;
+            top: 150px;
+            font-size: 2em;
+            text-align: center;
+            background: rgba(0,0,0,.8);
+            color: #FFF;
+            padding: 20px 0px;
+        }
+        #pause_overlay span {
+            font-size: 0.6em;
+            opacity: 0.8;
+        }
         /* hide reCaptcha badge */
         .grecaptcha-badge {
             display: none !important;
@@ -135,13 +150,14 @@
     <div id="container">
         <p id="score">Score: 0</p>
         <p id='gg'>Good game! <a id="refresh" href="#">Play again?</a></p>
+        <p id='pause_overlay'>PAUSED<br><span>Press Space or P to resume</span></p>
         <canvas width='358' height='360'></canvas>
         <div id="mobile_controls">
             <span class="button" id="move_left"></span>
             <span class="button" id="move_right"></span>
         </div>
         <div id="leaderboard_area">
-            <p>To play: Use arrow keys or buttons.</p>
+            <p>To play: Use arrow keys or buttons. Press Space or P to pause.</p>
             <span style="display:none"><a href="#" id="submit_last_score" class="hidden"></a></span>
             <div id="show_high_score_section">
                 <span id="high_score"></span><span style="display:none"><a href="#" id="submit_high_score" class="hidden">Submit to
