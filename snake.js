@@ -42,7 +42,7 @@ function getLevelParameters(level) {
         // Starting snake length increases with level
         snakeLength: baseSnakeLength + (level - 1) * 2,
         // Bonus starting score for higher levels
-        startingScore: (level - 1) * 10
+        startingScore: (level - 1)
     };
 }
 
