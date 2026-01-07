@@ -36,12 +36,9 @@ var score = 0;
 // Function to get level-based parameters
 function getLevelParameters(level) {
     // Base parameters for level 1
-    const baseQueueSize = 9;
     const baseSnakeLength = 8;
 
     return {
-        // Speed increases by reducing queue size (faster movement)
-        queueSize: Math.max(4, baseQueueSize - (level - 1)),
         // Starting snake length increases with level
         snakeLength: baseSnakeLength + (level - 1) * 2,
         // Bonus starting score for higher levels
@@ -224,9 +221,6 @@ function init() {
     // Get selected starting level
     var selectedLevel = parseInt(document.getElementById('starting_level').value);
     var levelParams = getLevelParameters(selectedLevel);
-
-    // Update NODE_QUEUE_SIZE based on level for speed adjustment
-    NODE_QUEUE_SIZE = levelParams.queueSize;
 
     // The +1 is necessary since the queue excludes the current position.
     snakeVelocity = NODE_ANGLE * 2 / (NODE_QUEUE_SIZE + 1);
