@@ -1,2 +1,5 @@
 secrets.php
 spherical_snake.db
+node_modules/
+package-lock.json
+package.json
