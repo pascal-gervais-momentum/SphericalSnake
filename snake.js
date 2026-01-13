@@ -33,6 +33,19 @@ var leftDown, rightDown;
 
 var score = 0;
 
+// Function to get level-based parameters
+function getLevelParameters(level) {
+    // Base parameters for level 1
+    const baseSnakeLength = 8;
+
+    return {
+        // Starting snake length increases with level
+        snakeLength: baseSnakeLength + (level - 1) * 2,
+        // Bonus starting score for higher levels
+        startingScore: (level - 1)
+    };
+}
+
 const btnMoveLeft = document.querySelector("#move_left");
 function setLeft(val) {
     if (val) {
@@ -120,6 +133,23 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
     window.location.reload(true);
 })
 
+// Function to restart game
+function restartGame() {
+    // Reset game state
+    stopped = false;
+    document.getElementsByTagName('body')[0].style = '';
+    document.getElementById('gg').style = 'display:none';
+
+    // Restart the game with new settings
+    init();
+}
+
+// Restart game when level changes
+document.getElementById("starting_level").addEventListener("change", restartGame);
+
+// Restart game when speed changes
+document.getElementById("game_speed").addEventListener("change", restartGame);
+
 function regeneratePellet() {
     pellet = pointFromSpherical(Math.random() * Math.PI * 2, Math.random() * Math.PI);
 }
@@ -194,6 +224,14 @@ function init() {
     paused = false;
     regeneratePellet();
 
+    // Get selected starting level
+    var selectedLevel = parseInt(document.getElementById('starting_level').value);
+    var levelParams = getLevelParameters(selectedLevel);
+
+    // Get selected speed (1-10 scale, where 5 is default, higher = faster)
+    var selectedSpeed = parseInt(document.getElementById('game_speed').value);
+    NODE_QUEUE_SIZE = Math.max(4, 14 - selectedSpeed);
+
     // The +1 is necessary since the queue excludes the current position.
     snakeVelocity = NODE_ANGLE * 2 / (NODE_QUEUE_SIZE + 1);
     var n = 40;
@@ -204,7 +242,13 @@ function init() {
         }
     }
     snake = [];
-    for (var i = 0; i < 8; i++) addSnakeNode();
+    // Use level-based snake length
+    for (var i = 0; i < levelParams.snakeLength; i++) addSnakeNode();
+
+    // Set starting score based on level
+    score = levelParams.startingScore;
+    document.querySelector("#score").innerHTML = "Score: " + score;
+
     window.requestAnimationFrame(update);
 }
 

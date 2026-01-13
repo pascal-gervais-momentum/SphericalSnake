@@ -142,12 +142,48 @@
             text-decoration: underline;
         }
 
+        #level_selector {
+            text-align: center;
+            padding: 10px 0;
+            background: rgba(0,0,0,.8);
+            color: #FFF;
+            font-size: 1.2em;
+        }
+
+        #level_selector label {
+            margin-right: 10px;
+        }
+
+        #starting_level, #game_speed {
+            font-size: 1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 2px solid #333;
+            background: #FFF;
+            cursor: pointer;
+            width: 60px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        #level_selector br {
+            line-height: 1.8em;
+        }
+
     </style>
 
 </head>
 
 <body>
     <div id="container">
+        <div id="level_selector">
+            <label for="starting_level">Starting Level:</label>
+            <input type="number" id="starting_level" min="1" max="50" value="1">
+            <br>
+            <label for="game_speed">Speed:</label>
+            <input type="number" id="game_speed" min="1" max="10" value="5">
+        </div>
         <p id="score">Score: 0</p>
         <p id='gg'>Good game! <a id="refresh" href="#">Play again?</a></p>
         <p id='pause_overlay'>PAUSED<br><span>Press Space or P to resume</span></p>
